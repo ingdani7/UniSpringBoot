@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Datos de Usuario</title>
+</head>
+<body>
+<header th:replace="~{layout/plantilla :: header}"></header>
+<h2>User Data</h2>
+<a th:href="@{/}">Return</a>
+<br>
+<form th:action="@{/guardar}" method="post" th:object="${persona}">
+    <input type="hidden" name="id_persona" th:field="*{id_persona}"/>
+    <br>
+    <label>Name:</label>
+    <input type="text" name="name" th:field="*{name}">
+    <span th:if = "${#fields.hasErrors('name')}" th:errors="*{name}">ERROR NAME</span>
+    <br>
+    <label>Lastname:</label>
+    <input type="text" name="lastname" th:field="*{lastname}">
+    <span th:if = "${#fields.hasErrors('lastname')}" th:errors="*{lastname}" >ERROR LASTNAME</span>
+    <br>
+    <label>Email:</label>
+    <input type="email" name="email" th:field="*{email}">
+    <span th:if = "${#fields.hasErrors('email')}" th:errors="*{email}" >ERROR EMAIL</span>
+    <br>
+    <label>Phone Number:</label>
+    <input type="tel" name="phone" th:field="*{phone}">
+    <br>
+    <input type="submit" name="save" value="save"/>
+</form>
+<footer th:replace="~{layout/plantilla :: footer}"></footer>
+</body>
+</html>

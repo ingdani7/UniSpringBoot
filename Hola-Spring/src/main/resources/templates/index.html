@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Inicio Thymeleaf</title>
+</head>
+<body>
+<header th:replace="~{layout/plantilla :: header}"></header>
+<a th:href="@{/agregar}">New User</a>
+<br/>
+<div th:if="${personas != null and !personas.empty}">
+    <br>
+    <table border="1">
+        <tr>
+            <br>
+            <th th:text="#{index.name}">NAME</th>
+            <th th:text="#{index.lastname}">LASTNAME</th>
+            <th th:text="#{index.email}">EMAIL</th>
+            <th th:text="#{index.phone}">PHONE</th>
+            <th th:text="#{index.edit}">Edit</th>
+            <th th:text="#{index.delete}">Delete</th>
+        </tr>
+        <tr th:each="persona : ${personas}">
+            <td th:text="${persona.name}">Mosrar nombre</td>
+            <td th:text="${persona.lastname}">Mostrar apellido</td>
+            <td th:text="${persona.email}"></td>
+            <td th:text="${persona.phone}"></td>
+            <td><a th:href="@{/editar/} + ${persona.id_persona}" th:text="Edit"></a></td>
+            <td><a th:href="@{/eliminar/} + ${persona.id_persona}" th:text="Delate"></a></td>
+        </tr>
+    </table>
+</div>
+<div th:if="${personas == null or personas.empty}">
+    Bd Empty
+</div>
+<footer th:replace="~{layout/plantilla :: footer}"></footer>
+
+</body>
+</html>
