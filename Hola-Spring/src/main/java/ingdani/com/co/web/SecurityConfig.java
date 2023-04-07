@@ -20,10 +20,4 @@ public class SecurityConfig {
                 .build();
         return new InMemoryUserDetailsManager(user);
     }
-    @Override
-    protected void configure (HttpSecurity http){
-        http.authorizeRequests()
-
-
-    }
 }
