@@ -1,40 +1,84 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
+<head th:replace="layout/plantilla :: head">
     <meta charset="UTF-8">
-    <title>Inicio Thymeleaf</title>
+    <title>Inicio</title>
 </head>
 <body>
-<header th:replace="~{layout/plantilla :: header}"></header>
-<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/agregar}">New User</a>
+<header></header>
+<nav class="navbar navbar-expand-lg bg-body-tertiary navbar bg-dark" data-bs-theme="dark">
+    <div class="container">
+        <a th:href="@{/total_tour}" class="navbar-brand">PLanes Turisticos</a>
+        <button class="navbar-toggler btn btn-success" data-toggle="collapse" data-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav">
+                <li class="nav-item px-2">
+                    <a sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_VENDEDOR')" th:href="@{/clientes}"
+                       class="nav-link active">Administrar</a>
+                </li>
+            </ul>
+            <ul sec:authorize="isAuthenticated()" class="navbar-nav ml-auto">
+                <li class="nav-item mr-3">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-user"></i>
+                        <span>Bievenido:</span>
+                        <span sec:authentication="name">Usuario</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <form method="POST" th:action="@{/logout}">
+                        <a href="#" onclick="this.parentNode.submit();" class="nav-link">
+                            <i class="fas fa-user-times"> Salir</i>
+                        </a>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<section id="main-header" class="pyu-2 bg-primary">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1>
+                    <i class="fas fa-cog">TURISMO S.A</i>
+                </h1>
+            </div>
+        </div>
+    </div>
+</section>
 <br/>
-<div th:if="${personas != null and !personas.empty}">
-    <br>
-    <table border="1">
-        <tr>
-            <br>
-            <th th:text="#{index.name}">NAME</th>
-            <th th:text="#{index.lastname}">LASTNAME</th>
-            <th th:text="#{index.email}">EMAIL</th>
-            <th th:text="#{index.phone}">PHONE</th>
-            <th sec:authorize="hasRole('ROLE_ADMIN')" th:text="#{index.edit}">Edit</th>
-            <th sec:authorize="hasRole('ROLE_ADMIN')" th:text="#{index.delete}">Delete</th>
-        </tr>
-        <tr th:each="persona : ${personas}">
-            <td th:text="${persona.name}">Mosrar nombre</td>
-            <td th:text="${persona.lastname}">Mostrar apellido</td>
-            <td th:text="${persona.email}"></td>
-            <td th:text="${persona.phone}"></td>
-            <td sec:authorize="hasRole('ROLE_ADMIN')" ><a th:href="@{/editar/} + ${persona.id_persona}" th:text="Edit"></a></td>
-            <td sec:authorize="hasRole('ROLE_ADMIN')" ><a th:href="@{/eliminar/} + ${persona.id_persona}" th:text="Delate"></a></td>
-        </tr>
-    </table>
 </div>
-<div th:if="${personas == null or personas.empty}">
-    Bd Empty
+
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img class="d-block w-100" src="/img/eje1.png" alt="Primera imagen">
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-100" src="/img/eje2.png" alt="Segunda imagen">
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-100" src="/img/eje3.png" alt="Tercera imagen">
+        </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Anterior</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Siguiente</span>
+    </a>
 </div>
 <footer th:replace="~{layout/plantilla :: footer}"></footer>
-
 </body>
 </html>

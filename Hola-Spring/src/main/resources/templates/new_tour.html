@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+<head th:replace="layout/plantilla :: head">
+    <meta charset="UTF-8"/>
+    <title>Registrar Nuevo Tour</title>
+</head>
+<body>
+<header th:replace="~{layout/plantilla :: header}"></header>
+<br>
+<a th:href="@{/total_tour}">
+    <button type="button" class="btn btn-success">Retornar</button>
+</a>
+<br>
+<div class="container p-3">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Tour</h4>
+                </div>
+                <table class="table table-stryped">
+                    <thead class="thead-dark">
+                    <form th:action="@{/guardar_tour}" method="post" th:object="${tour}">
+                        <input type="hidden" name="id_tour" th:field="*{id_tour}"/>
+                        <div class="mb-3 p-4">
+                            <label>Fecha de creacion:</label>
+                            <input type="date" class="form-control" name="date" th:field="*{fecha}">
+                            <span th:if="${#fields.hasErrors('fecha')}" th:errors="*{fecha}">ERROR FECHA</span>
+                        </div>
+                        <div class="mb-3 p-4">
+                            <label>Descripcion:</label>
+                            <input type="text" class="form-control" name="descripcion" th:field="*{descripcion}">
+                            <span th:if="${#fields.hasErrors('descripcion')}"
+                                  th:errors="*{descripcion}">ERROR DESCRIPCION</span>
+                        </div>
+                        <div class="mb-3 p-4">
+                            <label>Tiempo de duracion(Cantidad dias):</label>
+                            <input type="number" class="form-control" name="tiempo_duracion" th:field="*{tiempo_duracion}">
+                            <span th:if="${#fields.hasErrors('tiempo_duracion')}" th:errors="*{tiempo_duracion}">ERROR TIEMPO DE DURACION</span>
+                        </div>
+                        <div class="mb-3 p-4">
+                            <label>Incluye Desayunos:</label>
+                            <input type="text" class="form-control" name="desayunos" th:field="*{desayunos}">
+                        </div>
+                        <div class="mb-3 p-4">
+                            <label>Incluye Almuerzos:</label>
+                            <input type="text" class="form-control" name="almuerzos" th:field="*{almuerzos}">
+                        </div>
+                        <div class="mb-3 p-4">
+                            <label>Costo:</label>
+                            <input type="number" class="form-control" name="costo" th:field="*{costo}">
+                            <span th:if="${#fields.hasErrors('costo')}" th:errors="*{costo}">ERROR DE COSTO</span>
+                        </div>
+                        <div class="mb-3 p-4">
+                            <label>Estado del tour:</label>
+                            <input type="text" class="form-control" name="estado" th:field="*{estado}">
+                        </div>
+                        <button type="submit" name="save" value="save" class="btn btn-primary">Guardar</button>
+                    </form>
+                    </thead>
+                </table>
+                <footer th:replace="~{layout/plantilla :: footer}"></footer>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

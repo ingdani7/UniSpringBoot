@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/plantilla :: head">
+    <meta charset="UTF-8">
+    <title>Centro de control de puntos de visita</title>
+</head>
+<body>
+<header th:replace="~{layout/plantilla :: header}"></header>
+<br/>
+<td sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_VENDEDOR')"><a
+        th:href="@{/new_puntov}">
+    <button type="button" class="btn btn-success">Ingresar Nuevo Punto De Visita</button>
+</a></td>
+<div th:if="${puntoVisitas != null and !puntoVisitas.empty}">
+    <br>
+    <div class="container p-3">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>PUNTOS DE VISITA</h4>
+                    </div>
+                    <table class="table">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>ACTIVIDAD</th>
+                            <th>DEPARTAMENTO</th>
+                            <th>CIUDAD</th>
+                            <th sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_VENDEDOR')">EDITAR</th>
+                            <th sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_VENDEDOR')">ELIMINAR</th>
+
+                        </tr>
+                        </thead>
+                        <tr th:each="puntoVisita : ${puntoVisitas}">
+                            <td th:text="${puntoVisita.actividad}"></td>
+                            <td th:text="${puntoVisita.departamento}"></td>
+                            <td th:text="${puntoVisita.ciudad}"></td>
+
+                            <td sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_VENDEDOR')"><a
+                                    th:href="@{/editar_pv/} + ${puntoVisita.idpunto_visita}">
+                                <button type="button" class="btn btn-info">Editar</button>
+                            </a></td>
+                            <td sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_VENDEDOR')"><a
+                                    th:href="@{/eliminar_pv/} + ${puntoVisita.idpunto_visita}">
+                                <button type="button" class="btn btn-danger">Eliminar</button>
+                            </a></td>
+                        </tr>
+                    </table>
+                </div>
+                <div th:if="${puntoVisitas == null or puntoVisitas.empty}">
+                    Bd Empty
+                </div>
+                <footer th:replace="~{layout/plantilla :: footer}"></footer>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

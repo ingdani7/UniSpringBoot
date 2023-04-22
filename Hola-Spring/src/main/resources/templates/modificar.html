@@ -1,35 +1,76 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns="http://www.w3.org/1999/xhtml">
-<head>
+<head th:replace="layout/plantilla :: head">
     <meta charset="UTF-8"/>
-    <title>Datos de Usuario</title>
+    <title>Datos de clientes</title>
 </head>
 <body>
 <header th:replace="~{layout/plantilla :: header}"></header>
-<h2>User Data</h2>
-<a th:href="@{/}">Return</a>
 <br>
-<form th:action="@{/guardar}" method="post" th:object="${persona}">
-    <input type="hidden" name="id_persona" th:field="*{id_persona}"/>
-    <br>
-    <label>Name:</label>
-    <input type="text" name="name" th:field="*{name}">
-    <span th:if = "${#fields.hasErrors('name')}" th:errors="*{name}">ERROR NAME</span>
-    <br>
-    <label>Lastname:</label>
-    <input type="text" name="lastname" th:field="*{lastname}">
-    <span th:if = "${#fields.hasErrors('lastname')}" th:errors="*{lastname}" >ERROR LASTNAME</span>
-    <br>
-    <label>Email:</label>
-    <input type="email" name="email" th:field="*{email}">
-    <span th:if = "${#fields.hasErrors('email')}" th:errors="*{email}" >ERROR EMAIL</span>
-    <br>
-    <label>Phone Number:</label>
-    <input type="tel" name="phone" th:field="*{phone}">
-    <br>
-    <input type="submit" name="save" value="save"/>
-</form>
-<footer th:replace="~{layout/plantilla :: footer}"></footer>
+<a th:href="@{/clientes}">
+    <button type="button" class="btn btn-success">Retornar</button>
+</a>
+<br>
+<div class="container p-3">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Cliente</h4>
+                </div>
+                <table class="table table-stryped">
+                    <thead class="thead-dark">
+                    <form th:action="@{/guardar_cliente}" method="post" th:object="${cliente}">
+                        <input type="hidden" name="id_cliente" th:field="*{id_cliente}"/>
+
+                        <div class="mb-3 p-4">
+                            <label class="form-label">Nombre:</label>
+                            <input type="text" class="form-control" name="nombre" th:field="*{nombre}">
+                            <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">ERROR NOMBRE</span>
+                        </div>
+                        <div class="mb-3 p-4">
+                            <label class="form-label">Cedula:</label>
+                            <input type="text" class="form-control" name="cedula" th:field="*{cedula}">
+                            <span th:if="${#fields.hasErrors('cedula')}" th:errors="*{cedula}">ERROR CEDULA</span>
+                        </div>
+                        <div class="mb-3 p-4">
+                            <label class="form-label">Fecha de nacimiento:</label>
+                            <input type="date" class="form-control" name="cumpleanos" th:field="*{cumpleanos}">
+                            <span th:if="${#fields.hasErrors('cumpleanos')}" th:errors="*{cumpleanos}">ERROR FECHA DE NACIMIENTO</span>
+                        </div>
+                        <div class="mb-3 p-4">
+                            <label class="form-label">Telefono:</label>
+                            <input type="tel" class="form-control" name="telefono" th:field="*{telefono}">
+                            <span th:if="${#fields.hasErrors('telefono')}"
+                                  th:errors="*{telefono}">ERROR DE TELEFONO</span>
+                        </div>
+                        <div class="mb-3 p-4">
+                            <label class="form-label">Celular:</label>
+                            <input type="tel" class="form-control" name="celular" th:field="*{celular}">
+                            <span th:if="${#fields.hasErrors('celular')}" th:errors="*{celular}">ERROR CELULAR</span>
+                        </div>
+                        <div class="mb-3 p-4">
+                            <label class="form-label">Email:</label>
+                            <input type="email" class="form-control" name="correo" th:field="*{correo}">
+                            <span th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}">ERROR EMAIL</span>
+                        </div>
+                        <div class="mb-3 p-4">
+                            <label class="form-label">Contacto de emergencia:</label>
+                            <input type="text" class="form-control" name="contacto_emergencia" th:field="*{contacto_emergencia}">
+                        </div>
+                        <div class="mb-3 p-4">
+                            <label class="form-label">Telefono de emergencia:</label>
+                            <input type="text" class="form-control" name="telefono_emergencia" th:field="*{telefono_emergencia}">
+                        </div>
+                        <button type="submit" name="save" value="save" class="btn btn-primary">Guardar</button>
+                    </form>
+                    </thead>
+                </table>
+                <footer th:replace="~{layout/plantilla :: footer}"></footer>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

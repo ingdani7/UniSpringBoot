@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+<head th:replace="layout/plantilla :: head">
+    <meta charset="UTF-8"/>
+    <title>Registrar Nuevo Punto De Visita</title>
+</head>
+<body>
+<header th:replace="~{layout/plantilla :: header}"></header>
+<br>
+<a th:href="@{/puntos_visita}">
+    <button type="button" class="btn btn-success">Retornar</button>
+</a>
+<br>
+<div class="container p-3">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Puntos de visita</h4>
+                </div>
+                <table class="table table-stryped">
+                    <thead class="thead-dark">
+                    <form th:action="@{/guardar_pv}" method="post" th:object="${puntoDeVisita}">
+                        <input type="hidden" name="idpunto_visita" th:field="*{idpunto_visita}"/>
+                        <br>
+                        <div class="mb-3 p-4">
+                            <label class="form-label">Actividad:</label>
+                            <input type="text" class="form-control" name="actividad" th:field="*{actividad}">
+                            <span th:if="${#fields.hasErrors('actividad')}"
+                                  th:errors="*{actividad}">ERROR DE ACTIVIDAD</span>
+                        </div>
+                        <div class="mb-3 p-4">
+                            <label class="form-label">Departamento:</label>
+                            <input type="text" class="form-control" name="departamento" th:field="*{departamento}">
+                            <span th:if="${#fields.hasErrors('departamento')}" th:errors="*{departamento}">ERROR DEPARTAMENTO</span>
+                        </div>
+                        <div class="mb-3 p-4">
+                            <label class="form-label">Ciudad:</label>
+                            <input type="text" class="form-control" name="ciudad" th:field="*{ciudad}">
+                            <span th:if="${#fields.hasErrors('ciudad')}" th:errors="*{ciudad}">ERROR CIUDAD</span>
+                        </div>
+                        <button type="submit" name="save" value="save" class="btn btn-primary">Guardar</button>
+                    </form>
+                    </thead>
+                </table>
+                <footer th:replace="~{layout/plantilla :: footer}"></footer>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

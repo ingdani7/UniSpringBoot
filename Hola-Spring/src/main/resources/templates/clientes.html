@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/plantilla :: head">
+    <meta charset="UTF-8">
+    <title>Clientes</title>
+</head>
+<body>
+<header th:replace="~{layout/plantilla :: header}"></header>
+<br/>
+<td sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_VENDEDOR')"><a
+        th:href="@{/agregar_cliente}">
+    <button type="button" class="btn btn-success">Registrar Nuevo Cliente</button>
+</a></td>
+<br/>
+<div class="container p-3">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>CLIENTES</h4>
+                </div>
+                <div th:if="${clientes != null and !clientes.empty}">
+                    <table class="table table-stryped">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>ID CLIENTE</th>
+                            <th>NOMBRE</th>
+                            <th>CEDULA</th>
+                            <th>FECHA DE NACIMIENTO</th>
+                            <th>TELEFONO</th>
+                            <th>CELULAR</th>
+                            <th>CORREO</th>
+                            <th>CONTACTO DE EMERGENCIA</th>
+                            <th>TELEFONO DE EMERGENCIA</th>
+                            <th sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_VENDEDOR')" th:text="#{index.edit}">Edit
+                            </th>
+                            <th sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_VENDEDOR')" th:text="#{index.delete}">
+                                Delete
+                            </th>
+                        </tr>
+                        <tr th:each="cliente : ${clientes}">
+                            <td th:text="${cliente.id_cliente}"></td>
+                            <td th:text="${cliente.nombre}"></td>
+                            <td th:text="${cliente.cedula}"></td>
+                            <td th:text="${cliente.cumpleanos}"></td>
+                            <td th:text="${cliente.telefono}"></td>
+                            <td th:text="${cliente.celular}"></td>
+                            <td th:text="${cliente.correo}"></td>
+                            <td th:text="${cliente.contacto_emergencia}"></td>
+                            <td th:text="${cliente.telefono_emergencia}"></td>
+                            <td sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_VENDEDOR')"><a
+                                    th:href="@{/editar/} + ${cliente.id_cliente}">
+                                <button type="button" class="btn btn-info">Editar</button>
+                            </a></td>
+                            <td sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_VENDEDOR')"><a
+                                    th:href="@{/eliminar/} + ${cliente.id_cliente}">
+                                <button type="button" class="btn btn-danger">Eliminar</button>
+                            </a></td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:if="${clientes == null or clientes.empty}">
+    Bd Empty
+</div>
+<footer th:replace="~{layout/plantilla :: footer}"></footer>
+</body>
+</html>

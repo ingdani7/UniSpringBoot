@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/plantilla :: head">
+  <meta charset="UTF-8">
+  <title>Centro de tarifas</title>
+</head>
+<body>
+<header th:replace="~{layout/plantilla :: header}"></header>
+<br/>
+<div th:if="${tarifas != null and !tarifas.empty}">
+  <br>
+  <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/new_puntov}">Ingresar Nuevo Punto De Visita</a>
+  <table class="table">
+    <thead class="thead-dark">
+    <tr>
+      <th>ACTIVIDAD</th>
+      <th>DEPARTAMENTO</th>
+      <th>CIUDAD</th>
+      <th>EDITAR</th>
+      <th>ELIMINAR</th>
+
+    </tr>
+    <tr th:each="puntoVisita : ${puntoVisitas}">
+      <td th:text="${puntoVisita.actividad}"></td>
+      <td th:text="${puntoVisita.departamento}"></td>
+      <td th:text="${puntoVisita.ciudad}"></td>
+      <td sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/editar_pv/} + ${puntoVisita.idpunto_visita}"
+                                                   th:text="Editar"></a></td>
+      <td sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/eliminar_pv/} + ${puntoVisita.idpunto_visita}"
+                                                   th:text="Eliminar"></a></td>
+    </tr>
+    </thead>
+  </table>
+</div>
+<div th:if="${puntoVisitas == null or puntoVisitas.empty}">
+  Bd Empty
+</div>
+<footer th:replace="~{layout/plantilla :: footer}"></footer>
+</body>
+</html>

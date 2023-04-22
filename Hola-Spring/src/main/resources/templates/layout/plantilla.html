@@ -2,23 +2,70 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
+<head th:fragment="head">
     <meta charset="UTF-8">
-    <title>Plantilla</title>
+    <title>Turismo S.A</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.0.0-beta1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/webjars/font-awesome/css/all.css">
+    <script src="/webjars/jquery/3.6.0/jquery.min.js"></script>
+    <script src="/webjars/popper.js/umd/popper.min.js"></script>
+    <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
 <header th:fragment="header">
-    <h1 th:text="#{plantilla.titulo}">Control Of Clients</h1>
+    <div>
+        <nav sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_VENDEDOR')"
+             class="navbar navbar-expand-lg bg-body-tertiary navbar bg-dark" data-bs-theme="dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" th:href="@{/clientes}" th:text="#{plantilla.titulo}">Navbar</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" th:href="@{/total_tour}">Planes
+                                Turisticos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/vendedores}">Vendedores</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/compras}">Compras</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/puntos_visita}">Puntos De Visita</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled">Tarifas</a>
+                        </li>
+                    </ul>
+                    <form class="d-flex" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </div>
+    </nav>
 </header>
-    <footer th:fragment="footer">
-        <div>
-        <p> [[#{plantilla.pie-pagina}]] <a href="http://www.facebook.com" target="_blank">DaniInc.Company.com.co</a> </p>
-        <form method="POST" th:action="@{/logout}">
-            <b>User:</b> <span sec:authentication="name">User that did login</span>
-            <b>Roles:</b> <span sec:authentication="principal.authorities">Roles</span>
-            <a href="#" onclick="this.parentNode.submit();">Logout</a>
-        </form>
+<footer th:fragment="footer" class="bg-warning text-white mt-5 p-5">
+    <div class="container">
+        <div class="col text-center">
+            <p class="lead text-center"></p>
+            <form method="POST" th:action="@{/logout}">
+                <b>User:</b> <span sec:authentication="name">User that did login</span>
+                <b>Roles:</b> <span sec:authentication="principal.authorities">Roles</span>
+                <a href="#" onclick="this.parentNode.submit();">Logout</a>
+                <p> [[#{plantilla.pie-pagina}]] &copy; <a href="http://www.facebook.com"
+                                                   target="_blank">DaniInc.Company.com.co</a></p>
+
+            </form>
         </div>
-    </footer>
+    </div>
+</footer>
 </body>
 </html>

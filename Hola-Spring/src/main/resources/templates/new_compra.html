@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+<head th:replace="layout/plantilla :: head">
+    <meta charset="UTF-8"/>
+</head>
+<body>
+<header th:replace="~{layout/plantilla :: header}"></header>
+<br>
+<a th:href="@{/total_tour}">
+    <button type="button" class="btn btn-success">Retornar</button>
+</a>
+
+<div class="container p-3">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Nueva Compra</h4>
+                </div>
+                <table class="table table-stryped">
+                    <thead class="thead-dark">
+                    <form th:action="@{/guardar_compra}" method="post" th:object="${compra}">
+                        <input type="hidden" name="id_compra" th:field="*{id_compra}"/>
+
+                        <div class="mb-3 p-4">
+                            <label class="form-label">Ingrese la fecha de compra:</label>
+                            <input type="date" name="date" th:field="*{fecha_compra}" class="form-control">
+                            <span th:if="${#fields.hasErrors('cliente.id_cliente')}"
+                                  th:errors="*{cliente.id_cliente}"></span>
+                        </div>
+                        <div class="mb-3 p-4">
+                            <label class="form-label">Ingrese el ID del cliente:</label>
+                            <input type="number" class="form-control" name="id_cliente"
+                                   th:field="*{cliente.id_cliente}">
+                            <span th:if="${#fields.hasErrors('cliente.id_cliente')}"
+                                  th:errors="*{cliente.id_cliente}"></span>
+                        </div>
+                        <div class="mb-3 p-4">
+                            <label class="form-label">Ingrese el ID del vendedor:</label>
+                            <input type="number" class="form-control" name="id_vendedor"
+                                   th:field="*{vendedor.id_vendedor}">
+                            <span th:if="${#fields.hasErrors('vendedor.id_vendedor')}"
+                                  th:errors="*{vendedor.id_vendedor}"></span>
+                        </div>
+                        <div class="mb-3 p-4">
+                            <label class="form-label">Ingrese el ID del tour:</label>
+                            <input type="number" class="form-control" name="id_tour" th:field="*{tour.id_tour}">
+                            <span th:if="${#fields.hasErrors('tour.id_tour')}" th:errors="*{tour.id_tour}"></span>
+                        </div>
+                        <button type="submit" name="save" value="save" class="btn btn-primary">Guardar</button>
+                    </form>
+                    </thead>
+                </table>
+                <footer th:replace="~{layout/plantilla :: footer}"></footer>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

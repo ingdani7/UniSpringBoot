@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/plantilla :: head">
+    <meta charset="UTF-8">
+    <title>Centro de control de Tours</title>
+</head>
+<body>
+<header th:replace="~{layout/plantilla :: header}"></header>
+<br>
+<td sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_VENDEDOR')"><a
+        th:href="@{/new_tour}">
+    <button type="button" class="btn btn-success">Generar Nuevo Tour</button>
+</a></td>
+<br/>
+<div class="container p-3">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>TOURS</h4>
+                </div>
+                <div th:if="${toures != null and !toures.empty}">
+                    <table class="table table-stryped">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>FECHA INICIO</th>
+                            <th>ID TOUR</th>
+                            <th>DESCRIPCION</th>
+                            <th>TIEMPO DE DURACION</th>
+                            <th>INCLUYE DESAYUNOS</th>
+                            <th>INCLUYE ALMUERZOS</th>
+                            <th>INCLUYE COSTO</th>
+                            <th>ESTADO</th>
+                            <th sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_VENDEDOR')">EDITAR</th>
+                            <th sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_VENDEDOR')">ELIMINAR</th>
+                            <th sec:authorize="hasAnyRole('ROLE_USER')">COMPRAR</th>
+                        </thead>
+                        <tbody>
+                        </tr>
+                        <tr th:each="tour : ${toures}">
+                            <td th:text="${tour.fecha}"></td>
+                            <td th:text="${tour.id_tour}"></td>
+                            <td th:text="${tour.descripcion}"></td>
+                            <td th:text="${tour.tiempo_duracion} + ' Dias'"></td>
+                            <td th:text="${tour.desayunos} ? 'Incluido' : 'No Incluido'"></td>
+                            <td th:text="${tour.almuerzos} ? 'Incluido' : 'No Incluido'"></td>
+                            <td th:text="'$ '+${tour.costo}"></td>
+                            <td th:text="${tour.estado}"></td>
+                            <td sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_VENDEDOR')"><a th:href="@{/editar_tour/} + ${tour.id_tour}">
+                                <button type="button" class="btn btn-info">Editar</button>
+                            </a></td>
+                            <td sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_VENDEDOR')"><a
+                                    th:href="@{/eliminar_tour/} + ${tour.id_tour}">
+                                <button type="button" class="btn btn-danger">Eliminar</button>
+                            </a></td>
+                            <td sec:authorize="hasAnyRole('ROLE_USER')"><a th:href="@{/new_compra}">
+                                <button type="button" class="btn btn-primary"
+                                        th:text="Comprar"></button>
+                            </a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div th:if="${toures == null or toures.empty}">
+                    Bd Empty
+                </div>
+                <div>
+                    <footer th:replace="~{layout/plantilla :: footer}"></footer>
+                </div>
+</body>
+</html>

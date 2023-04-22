@@ -20,12 +20,17 @@ public class SecurityConfig implements SecurityConfigurer<DefaultSecurityFilterC
                 .password("123")
                 .roles("USER")
                 .build();
+        UserDetails vendedor = User.withDefaultPasswordEncoder()
+                .username("vendedor")
+                .password("123")
+                .roles("VENDEDOR")
+                .build();
         UserDetails admin = User.withDefaultPasswordEncoder()
                 .username("admin")
                 .password("123")
-                .roles("ADMIN","USER")
+                .roles("ADMIN","USER","VENDEDOR")
                 .build();
-        return new InMemoryUserDetailsManager(user,admin);
+        return new InMemoryUserDetailsManager(user,admin,vendedor);
     }
 
 
